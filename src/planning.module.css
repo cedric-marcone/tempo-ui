@@ -1,0 +1,120 @@
+.grid {
+  --col: minmax(90px, 1fr);
+
+  display: grid;
+  grid-template-columns:
+    40px var(--col) var(--col) var(--col) var(--col) var(--col)
+    var(--col) var(--col);
+
+  inline-size: 100cqi;
+  block-size: 100cqb;
+
+  overflow: auto;
+
+  background-color: #fff;
+}
+
+.gridHeader {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 3;
+
+  display: grid;
+  grid: subgrid / subgrid;
+  grid-area: 1 / span 8;
+
+  font-size: 13px;
+  font-weight: 500;
+
+  color: #4f4f4f;
+
+  user-select: none;
+
+  & > .cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    white-space: nowrap;
+
+    padding: 5px;
+
+    background-color: #fff9;
+    backdrop-filter: blur(6px);
+
+    border-block-end: 0.5px solid #e1e1e1;
+  }
+}
+
+.row {
+  display: contents;
+
+  & > .cell {
+    min-block-size: max(25px, 3cqb);
+  }
+}
+
+.rowHeader {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+
+  font-variant-numeric: tabular-nums;
+  font-size: 11px;
+
+  background: #fff;
+  color: #9f9f9f;
+  padding-left: 3px;
+  translate: 0 -9px;
+
+  user-select: none;
+}
+
+.row:nth-child(n + 2):not(:last-child) > .cell:not(:first-child) {
+  border-block-end: 0.5px solid #e1e1e1;
+}
+
+.cell:nth-child(n + 2):not(:last-child) {
+  border-inline-end: 0.5px solid #e1e1e1;
+}
+
+.slot {
+  box-sizing: border-box;
+  z-index: 1;
+
+  margin: 3px 3.5px 4px 3px;
+  padding: 0.25cqb 0.25cqi;
+  border-radius: clamp(3px, 0.5cqb, 15px);
+
+  font-weight: 500;
+  font-size: clamp(11px, min(2cqb, 2cqi), 15px);
+
+  color: hsla(var(--hue), 100%, 20%, 0.8);
+  background-color: hsla(var(--hue), 100%, 70%, 0.5);
+  outline: 1px solid hsla(var(--hue), 100%, 70%, 0.75);
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  user-select: none;
+}
+.slot:focus {
+  outline: 2px solid hsla(var(--hue), 50%, 50%, 0.75);
+}
+.CC {
+  --hue: 200;
+}
+.LP {
+  --hue: 350;
+}
+.Off {
+  --hue: 54;
+  background-color: hsla(var(--hue), 100%, 50%, 1);
+  background-image: repeating-linear-gradient(
+    330deg,
+    #fff,
+    #fff 7px,
+    transparent 7px,
+    transparent 8px
+  );
+}

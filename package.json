@@ -1,0 +1,25 @@
+{
+  "name": "tempo-ui",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "classnames": "^2.5.1",
+    "react": "19.0.0-rc-eb259b5d3b-20240605",
+    "react-dom": "19.0.0-rc-eb259b5d3b-20240605"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.2",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.2.1",
+    "lightningcss": "^1.25.1",
+    "typescript": "^5.2.2",
+    "vite": "^5.2.0"
+  }
+}

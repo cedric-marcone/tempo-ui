@@ -1,0 +1,54 @@
+[
+  {
+    "name": "Cours collectif Top 6 enfant matin",
+    "type": "group",
+    "max_participants": 6,
+    "level": "1ère étoile",
+    "participants": [
+      {
+        "id": 123456,
+        "firstname": "Léa",
+        "lastname": "Dupont",
+        "age": 8
+      },
+      {
+        "id": 123457,
+        "firstname": "Tom",
+        "lastname": "Durand",
+        "age": 9
+      }
+    ],
+    "instructor": {
+      "id": 936,
+      "firstname": "Jean",
+      "lastname": "Martin"
+    },
+    "schedules": [
+      {
+        "date": "2024-02-04",
+        "start_time": "09:00",
+        "end_time": "11:00"
+      },
+      {
+        "date": "2024-02-05",
+        "start_time": "09:00",
+        "end_time": "11:00"
+      },
+      {
+        "date": "2024-02-06",
+        "start_time": "09:00",
+        "end_time": "11:00"
+      },
+      {
+        "date": "2024-02-07",
+        "start_time": "09:00",
+        "end_time": "11:00"
+      },
+      {
+        "date": "2024-02-08",
+        "start_time": "09:00",
+        "end_time": "11:00"
+      }
+    ]
+  }
+]
