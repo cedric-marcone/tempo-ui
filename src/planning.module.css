@@ -1,9 +1,10 @@
 .grid {
+  --hcol: minmax(35px, 0.5fr);
   --col: minmax(90px, 1fr);
 
   display: grid;
   grid-template-columns:
-    40px var(--col) var(--col) var(--col) var(--col) var(--col)
+    var(--hcol) var(--col) var(--col) var(--col) var(--col) var(--col)
     var(--col) var(--col);
 
   inline-size: 100cqi;
@@ -23,7 +24,7 @@
   grid: subgrid / subgrid;
   grid-area: 1 / span 8;
 
-  font-size: 13px;
+  font-size: clamp(11px, min(2cqb, 2cqi), 13px);
   font-weight: 500;
 
   color: #4f4f4f;
@@ -37,10 +38,10 @@
     text-align: center;
     white-space: nowrap;
 
-    padding: 5px;
-
-    background-color: #fff9;
+    background-color: #fffd;
     backdrop-filter: blur(6px);
+
+    padding: 5px;
 
     border-block-end: 0.5px solid #e1e1e1;
   }
@@ -55,17 +56,19 @@
 }
 
 .rowHeader {
+  --font-size: clamp(9px, min(2cqb, 2cqi), 11px);
   position: sticky;
   left: 0;
   z-index: 2;
 
   font-variant-numeric: tabular-nums;
-  font-size: 11px;
+  font-size: var(--font-size);
+  text-align: right;
 
   background: #fff;
-  color: #9f9f9f;
-  padding-left: 3px;
-  translate: 0 -9px;
+  color: #757575;
+  padding-inline-end: 5px;
+  translate: 0 calc(-1 * var(--font-size) + 0.5px);
 
   user-select: none;
 }
