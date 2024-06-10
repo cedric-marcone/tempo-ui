@@ -30,6 +30,8 @@
   color: #4f4f4f;
 
   user-select: none;
+  pointer-events: none;
+  touch-action: none;
 
   & > .cell {
     display: flex;
@@ -52,6 +54,7 @@
 
   & > .cell {
     min-block-size: max(25px, 3cqb);
+    user-select: none;
   }
 }
 
@@ -71,6 +74,8 @@
   translate: 0 calc(-1 * var(--font-size) + 0.5px);
 
   user-select: none;
+  pointer-events: none;
+  touch-action: none;
 }
 
 .row:nth-child(n + 2):not(:last-child) > .cell:not(:first-child) {

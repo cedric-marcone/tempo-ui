@@ -27,12 +27,43 @@ export default function WeekPlanning({
   endHour,
 }: Props) {
   const first = Dates.previousWeekday(date, startDay);
-  const colHeaders = Arrays.range(0, 7).map(Dates.formatDay(first));
-  const rowHeaders = Arrays.range(startHour, endHour).map(Dates.formatHour);
+  const cols = Arrays.range(0, 7).map(Dates.formatDay(first));
+  const rows = Arrays.range(startHour, endHour).map(Dates.formatHour);
+  let drag = false;
 
-  const cellClicked = (row: number, col: number) => (e: React.MouseEvent) => {
-    const res = physicalToLogical(row, col, e);
-    console.log(res);
+  const gridMouseDown = (e: React.MouseEvent) => {
+    const target = e.target as HTMLElement;
+    if (target.classList.contains(css.slot)) return;
+
+    drag = true;
+    const grid = e.currentTarget;
+    grid.querySelectorAll(".slot").forEach((slot) => {
+      slot.setAttribute("inert", "true");
+    });
+    const ts = toTimestamp(e, first, startHour);
+    if (!ts) return;
+    console.log("down", ts);
+  };
+
+  const gridMouseUp = (e: React.MouseEvent) => {
+    const target = e.target as HTMLElement;
+    if (target.classList.contains(css.slot)) return;
+
+    drag = false;
+    const grid = e.currentTarget;
+    grid.querySelectorAll(".slot").forEach((slot) => {
+      slot.removeAttribute("inert");
+    });
+    const ts = toTimestamp(e, first, startHour);
+    if (!ts) return;
+    console.log("up  ", ts);
+  };
+
+  const gridMouseMove = (e: React.MouseEvent) => {
+    if (!drag) return;
+    const ts = toTimestamp(e, first, startHour);
+    if (!ts) return;
+    console.log("move", ts);
   };
 
   const slotClicked = (slot: Event) => (e: React.MouseEvent) => {
@@ -41,7 +72,13 @@ export default function WeekPlanning({
   };
 
   return (
-    <div className={css.grid}>
+    <div
+      className={css.grid}
+      tabIndex={-1}
+      onMouseDown={gridMouseDown}
+      onMouseMove={gridMouseMove}
+      onMouseUp={gridMouseUp}
+    >
       {mapEvents(events, startDay, startHour).map((slot, i) => {
         const { row, rowspan, col, colspan, title, type } = slot;
         const style = {
@@ -62,7 +99,7 @@ export default function WeekPlanning({
       })}
       <div className={css.gridHeader}>
         <div style={{ gridRow: 1, gridColumn: 1 }} />
-        {colHeaders.map((header, c) => (
+        {cols.map((header, c) => (
           <div
             key={c}
             className={css.cell}
@@ -74,7 +111,7 @@ export default function WeekPlanning({
           </div>
         ))}
       </div>
-      {rowHeaders.map((header, r) => (
+      {rows.map((header, r) => (
         <div key={r} className={css.row}>
           <div
             className={classNames(css.cell, css.rowHeader)}
@@ -82,12 +119,13 @@ export default function WeekPlanning({
           >
             {header}
           </div>
-          {colHeaders.map((_, c) => (
+          {cols.map((_, c) => (
             <div
               key={c}
               className={css.cell}
               style={{ gridRow: r + 2, gridColumn: c + 2 }}
-              onClick={cellClicked(r, c)}
+              data-row={r}
+              data-col={c}
             />
           ))}
         </div>
@@ -125,12 +163,23 @@ function mapEvents(
     .sort((a, b) => (a.col === b.col ? a.row - b.row : a.col - b.col));
 }
 
-function physicalToLogical(row: number, col: number, e: React.MouseEvent) {
+function toTimestamp(e: React.MouseEvent, first: Date, startHour: number) {
   const target = e.target as HTMLElement;
+  const ds = target.dataset;
+  if (!ds.row || !ds.col) return;
+
+  const row = Number(ds.row);
+  const col = Number(ds.col);
   const bounds = target.getBoundingClientRect();
-  const percentageY = (e.clientY - bounds.y) / bounds.height;
-  const quarterly = Numbers.roundMinutesToQuarter(60 * percentageY);
-  const r = quarterly === 60 ? row + 1 : row;
-  const minutes = quarterly === 60 ? 0 : quarterly;
-  return { row: r, col, minutes };
+
+  const percentage = (e.clientY - bounds.y) / bounds.height;
+  const quarterly = Numbers.roundMinutesToQuarter(60 * percentage);
+  const quarterlyRow = quarterly === 60 ? row + 1 : row;
+  const quaterlyMinutes = quarterly === 60 ? 0 : quarterly;
+
+  const date = new Date(first);
+  date.setUTCDate(first.getUTCDate() + col);
+  date.setUTCHours(startHour + quarterlyRow, quaterlyMinutes, 0, 0);
+
+  return Dates.formatUTCTimestamp(date);
 }

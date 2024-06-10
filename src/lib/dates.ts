@@ -36,6 +36,20 @@ export function formatDay(first: Date) {
   };
 }
 
+export function formatUTCTimestamp(date: Date) {
+  const d = formatUTCDate(date);
+  const hh = String(date.getUTCHours()).padStart(2, "0");
+  const mi = String(date.getUTCMinutes()).padStart(2, "0");
+  return `${d}T${hh}:${mi}`;
+}
+
+export function formatUTCDate(date: Date) {
+  const yy = date.getUTCFullYear();
+  const mm = String(date.getUTCMonth() + 1).padStart(2, "0");
+  const dd = String(date.getUTCDate()).padStart(2, "0");
+  return `${yy}-${mm}-${dd}`;
+}
+
 export function parseUTCTimestamp(date: string) {
   const [d, t] = date.split("T");
   const [year, month, day] = d.split("-").map(Number);
