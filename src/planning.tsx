@@ -30,12 +30,13 @@ export default function WeekPlanning({
   const colHeaders = Arrays.range(0, 7).map(Dates.formatDay(first));
   const rowHeaders = Arrays.range(startHour, endHour).map(Dates.formatHour);
 
-  const cellClicked = (e: React.MouseEvent) => {
-    const target = e.target as HTMLElement;
-    console.log(target.classList);
+  const cellClicked = (row: number, col: number) => (e: React.MouseEvent) => {
+    const res = physicalToLogical(row, col, e);
+    console.log(res);
   };
 
-  const slotClicked = (slot: Event) => () => {
+  const slotClicked = (slot: Event) => (e: React.MouseEvent) => {
+    e.stopPropagation();
     console.log(slot);
   };
 
@@ -49,15 +50,14 @@ export default function WeekPlanning({
           translate: `0 ${slot.start}%`,
         };
         return (
-          <div
+          <button
             key={i}
-            tabIndex={1}
             className={classNames(css.slot, css[type])}
             style={style}
             onClick={slotClicked(slot)}
           >
             {title}
-          </div>
+          </button>
         );
       })}
       <div className={css.gridHeader}>
@@ -87,7 +87,7 @@ export default function WeekPlanning({
               key={c}
               className={css.cell}
               style={{ gridRow: r + 2, gridColumn: c + 2 }}
-              onClick={cellClicked}
+              onClick={cellClicked(r, c)}
             />
           ))}
         </div>
@@ -123,4 +123,14 @@ function mapEvents(
       return { ...e, row, col, rowspan, colspan, size, start };
     })
     .sort((a, b) => (a.col === b.col ? a.row - b.row : a.col - b.col));
+}
+
+function physicalToLogical(row: number, col: number, e: React.MouseEvent) {
+  const target = e.target as HTMLElement;
+  const bounds = target.getBoundingClientRect();
+  const percentageY = (e.clientY - bounds.y) / bounds.height;
+  const quarterly = Numbers.roundMinutesToQuarter(60 * percentageY);
+  const r = quarterly === 60 ? row + 1 : row;
+  const minutes = quarterly === 60 ? 0 : quarterly;
+  return { row: r, col, minutes };
 }

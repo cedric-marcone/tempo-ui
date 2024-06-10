@@ -71,7 +71,7 @@
 }
 
 .row:nth-child(n + 2):not(:last-child) > .cell:not(:first-child) {
-  border-block-end: 0.5px solid #e1e1e1;
+  border-block-end: 0.5px solid #f1f1f1;
 }
 
 .cell:nth-child(n + 2):not(:last-child) {
@@ -79,18 +79,21 @@
 }
 
 .slot {
+  all: unset;
+  display: flex;
   box-sizing: border-box;
   z-index: 1;
 
   margin: 3px 3.5px 4px 3px;
   padding: 0.25cqb 0.25cqi;
   border-radius: clamp(3px, 0.5cqb, 15px);
+  border: none;
 
   font-weight: 500;
   font-size: clamp(11px, min(2cqb, 2cqi), 15px);
 
   color: hsla(var(--hue), 100%, 20%, 0.8);
-  background-color: hsla(var(--hue), 100%, 70%, 0.5);
+  background-color: hsla(var(--hue), 100%, 70%, 0.55);
   outline: 1px solid hsla(var(--hue), 100%, 70%, 0.75);
 
   overflow: hidden;
