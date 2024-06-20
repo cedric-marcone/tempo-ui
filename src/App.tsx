@@ -1,76 +1,17 @@
 import * as React from "react";
-// import Calendar from "./calendar";
 import * as Dates from "./lib/dates";
 import Planning from "./planning";
-import { Drawer } from "vaul";
-
+import { Drawer as Vaul } from "vaul";
 import css from "./app.module.css";
-
-const events = [
-  {
-    type: "CC",
-    title: "CC ENF",
-    from: "2024-06-06T14:00",
-    to: "2024-06-07T17:30",
-  },
-  {
-    type: "CC",
-    title: "CC ADU",
-    from: "2024-06-02T08:00",
-    to: "2024-06-04T10:00",
-  },
-  {
-    type: "LP",
-    title: "CP ENF",
-    from: "2024-06-03T10:00",
-    to: "2024-06-06T13:00",
-  },
-  {
-    type: "LP",
-    title: "CP ENF",
-    from: "2024-06-03T13:00",
-    to: "2024-06-03T14:00",
-  },
-  {
-    type: "LP",
-    title: "CP ENF",
-    from: "2024-06-04T13:00",
-    to: "2024-06-04T14:00",
-  },
-  {
-    type: "LP",
-    title: "CP ENF",
-    from: "2024-06-05T13:00",
-    to: "2024-06-05T14:00",
-  },
-  {
-    type: "LP",
-    title: "CP ENF",
-    from: "2024-06-03T14:00",
-    to: "2024-06-04T16:00",
-  },
-  {
-    type: "Off",
-    title: "Indisponible",
-    from: "2024-06-02T16:00",
-    to: "2024-06-04T18:00",
-  },
-  {
-    type: "Off",
-    title: "Indisponible",
-    from: "2024-06-01T08:00",
-    to: "2024-06-01T19:00",
-  },
-];
 
 const date = Dates.parseUTCDate("2024-06-02");
 
-// const dataPromise = fetch("/mock/data.json").then(
-//   (response) => response.json() as Promise<Lesson[]>
-// );
+const eventsPromise = fetch("/mock/events.json").then(
+  (response) => response.json() as Promise<PlanEvent[]>
+);
 
 export default function App() {
-  // const data = React.use(dataPromise);
+  const events = React.use(eventsPromise);
   const [open, setOpen] = React.useState(false);
   const [dialog, setDialog] = React.useState<JSX.Element>();
 
@@ -94,21 +35,22 @@ export default function App() {
         openDialog={openDialog}
       />
 
-      <Drawer.Root
+      <Vaul.Root
         open={open}
         onOpenChange={onOpenChange}
         shouldScaleBackground
-        handleOnly
+        // handleOnly
       >
-        <Drawer.Portal>
-          <Drawer.Overlay className={css.drawerOverlay} />
-          <Drawer.Content className={css.drawerContent}>
-            <Drawer.Handle className={css.drawerHandle} />
+        <Vaul.Portal>
+          <Vaul.Overlay className={css.drawerOverlay} />
+          <Vaul.Content className={css.drawerContent}>
+            <Vaul.Handle className={css.drawerHandle} />
+            <Vaul.Title>Événement</Vaul.Title>
+            <Vaul.Description>Détail de l'événement</Vaul.Description>
             {dialog}
-          </Drawer.Content>
-        </Drawer.Portal>
-      </Drawer.Root>
+          </Vaul.Content>
+        </Vaul.Portal>
+      </Vaul.Root>
     </main>
   );
-  // return <Calendar events={data} />;
 }

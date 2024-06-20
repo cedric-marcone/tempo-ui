@@ -7,14 +7,7 @@ import css from "./planning.module.css";
 
 type Day = keyof typeof Dates.DAYS;
 
-type Event = {
-  type: string;
-  title: string;
-  from: string;
-  to: string;
-};
-
-type Slot = Event & {
+type Slot = PlanEvent & {
   row: number;
   col: number;
   rowspan: number;
@@ -28,7 +21,7 @@ type Props = {
   startDay: Day;
   startHour: number;
   endHour: number;
-  events: Event[];
+  events: PlanEvent[];
   openDialog: (dialog: JSX.Element) => void;
 };
 
@@ -102,7 +95,7 @@ export default function WeekPlanning(props: Props) {
     document.addEventListener("mousemove", gridMouseMove);
   };
 
-  const slotClicked = (slot: Event) => (e: React.MouseEvent) => {
+  const slotClicked = (slot: PlanEvent) => (e: React.MouseEvent) => {
     e.stopPropagation();
     props.openDialog(<pre>{JSON.stringify(slot, null, 2)}</pre>);
   };
@@ -178,13 +171,17 @@ function applyStyles(element: HTMLElement, style: Record<string, unknown>) {
   }
 }
 
-function mapEventsToSlots(events: Event[], startDay: Day, startHour: number) {
+function mapEventsToSlots(
+  events: PlanEvent[],
+  startDay: Day,
+  startHour: number
+) {
   return events
     .map((e) => mapEventToSlot(e, startDay, startHour))
     .sort((a, b) => (a.col === b.col ? a.row - b.row : a.col - b.col));
 }
 
-function mapEventToSlot(event: Event, startDay: Day, startHour: number) {
+function mapEventToSlot(event: PlanEvent, startDay: Day, startHour: number) {
   let _from = Dates.parseUTCTimestamp(event.from);
   let _to = Dates.parseUTCTimestamp(event.to);
 
@@ -239,7 +236,7 @@ function changeSlotInertia(e: React.MouseEvent | MouseEvent, inert: boolean) {
   });
 }
 
-function intersects(event: Event, events: Event[]) {
+function intersects(event: PlanEvent, events: PlanEvent[]) {
   const aFfrom = Dates.parseUTCTimestamp(event.from);
   const aTo = Dates.parseUTCTimestamp(event.to);
   const aFromTime = Dates.formatUTCTime(aFfrom);
