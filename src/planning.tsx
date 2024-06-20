@@ -29,7 +29,7 @@ type Props = {
   startHour: number;
   endHour: number;
   events: Event[];
-  openDialog: (data: string) => void;
+  openDialog: (dialog: JSX.Element) => void;
 };
 
 let newSlot: Slot | undefined;
@@ -51,7 +51,7 @@ export default function WeekPlanning(props: Props) {
 
     changeSlotInertia(e, false);
     newSlotDiv.remove();
-    props.openDialog(JSON.stringify(newSlot, null, 2));
+    props.openDialog(<pre>{JSON.stringify(newSlot, null, 2)}</pre>);
     newSlotDiv = undefined;
     newSlot = undefined;
   };
@@ -104,7 +104,7 @@ export default function WeekPlanning(props: Props) {
 
   const slotClicked = (slot: Event) => (e: React.MouseEvent) => {
     e.stopPropagation();
-    props.openDialog(JSON.stringify(slot, null, 2));
+    props.openDialog(<pre>{JSON.stringify(slot, null, 2)}</pre>);
   };
 
   return (

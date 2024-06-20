@@ -1,0 +1,23 @@
+.drawerOverlay {
+  position: fixed;
+  inset: 0;
+  background: #00000040;
+}
+
+.drawerContent {
+  background: #fff;
+  display: flex;
+  border-radius: 10px 10px 0 0;
+  height: 90%;
+  padding: 10px 20px;
+  position: fixed;
+  inset-block-end: 0;
+  inset-inline: max(0px, 40cqi - 320px);
+  flex-direction: column;
+  outline: none;
+}
+
+.drawerHandle {
+  margin-top: 10px;
+  background: grey;
+}
