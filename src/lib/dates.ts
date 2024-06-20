@@ -38,9 +38,14 @@ export function formatDay(first: Date) {
 
 export function formatUTCTimestamp(date: Date) {
   const d = formatUTCDate(date);
+  const t = formatUTCTime(date);
+  return `${d}T${t}`;
+}
+
+export function formatUTCTime(date: Date) {
   const hh = String(date.getUTCHours()).padStart(2, "0");
   const mi = String(date.getUTCMinutes()).padStart(2, "0");
-  return `${d}T${hh}:${mi}`;
+  return `${hh}:${mi}`;
 }
 
 export function formatUTCDate(date: Date) {

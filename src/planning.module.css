@@ -11,11 +11,16 @@
   block-size: 100cqb;
 
   overflow: auto;
+  scroll-behavior: smooth;
 
   background-color: #fff;
 }
 
-.gridHeader {
+.slots {
+  display: contents;
+}
+
+.header {
   position: sticky;
   inset-block-start: 0;
   z-index: 3;
@@ -33,7 +38,7 @@
   pointer-events: none;
   touch-action: none;
 
-  & > .cell {
+  & > .colHeader {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -43,7 +48,7 @@
     background-color: #fffd;
     backdrop-filter: blur(6px);
 
-    padding: 5px;
+    padding: 1cqb 1cqi;
 
     border-block-end: 0.5px solid #e1e1e1;
   }
@@ -86,13 +91,21 @@
   border-inline-end: 0.5px solid #e1e1e1;
 }
 
+.slotOuter {
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+  padding: 3px;
+}
+
 .slot {
   all: unset;
+  flex: 1;
   display: flex;
   box-sizing: border-box;
   z-index: 1;
 
-  margin: 3px 3.5px 4px 3px;
+  margin: 0;
   padding: 0.25cqb 0.25cqi;
   border-radius: clamp(3px, 0.5cqb, 15px);
   border: none;
@@ -100,17 +113,27 @@
   font-weight: 500;
   font-size: clamp(11px, min(2cqb, 2cqi), 15px);
 
-  color: hsla(var(--hue), 100%, 20%, 0.8);
-  background-color: hsla(var(--hue), 100%, 70%, 0.55);
+  color: hsla(var(--hue), 100%, 20%, 0.85);
+  background-color: hsla(var(--hue), 100%, 70%, 0.25);
   outline: 1px solid hsla(var(--hue), 100%, 70%, 0.75);
 
   overflow: hidden;
   text-overflow: ellipsis;
 
   user-select: none;
+
+  -webkit-tap-highlight-color: transparent;
 }
 .slot:focus {
   outline: 2px solid hsla(var(--hue), 50%, 50%, 0.75);
+}
+.NEW,
+.NEW:focus {
+  --hue: 250;
+  color: hsla(var(--hue), 0%, 20%, 0.7);
+  background-color: hsla(var(--hue), 0%, 75%, 0.25);
+  outline: none;
+  border-radius: 0;
 }
 .CC {
   --hue: 200;

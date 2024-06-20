@@ -21,13 +21,21 @@ body {
   height: 100dvh;
   display: flex;
   align-items: center;
+  background-color: #fff;
 }
 
 #root {
-  container-type: size;
-  inline-size: 80dvw;
-  block-size: 80dvh;
+  inline-size: 100dvw;
+  block-size: 100dvh;
   margin: auto;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+}
+main {
+  container-type: size;
+  flex: 1;
+  max-height: 100dvh;
 }
 
 /* .logo {
