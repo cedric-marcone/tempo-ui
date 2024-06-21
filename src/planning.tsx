@@ -66,6 +66,10 @@ export default function WeekPlanning(props: Props) {
     newSlot = mapEventToSlot(event, startDay, startHour);
 
     applyStyles(newSlotDiv, stylesFromSlot(newSlot));
+
+    newSlotDiv.querySelector(`.${css.to}`)!.textContent = Dates.formatUTCTime(
+      Dates.parseUTCTimestamp(to)
+    );
   };
 
   const gridMouseDown = (e: React.MouseEvent) => {
@@ -89,6 +93,20 @@ export default function WeekPlanning(props: Props) {
     newSlotDiv.inert = true;
     newSlotDiv.className = classNames(css.slot, css.NEW);
     applyStyles(newSlotDiv, stylesFromSlot(newSlot));
+
+    const fromLabel = document.createElement("span");
+    fromLabel.className = css.from;
+    fromLabel.textContent = Dates.formatUTCTime(
+      Dates.parseUTCTimestamp(newSlot.from)
+    );
+
+    const toLabel = document.createElement("span");
+    toLabel.className = css.to;
+    toLabel.textContent = "";
+
+    newSlotDiv.appendChild(fromLabel);
+    newSlotDiv.appendChild(toLabel);
+
     document.querySelector(".slots")!.appendChild(newSlotDiv);
 
     document.addEventListener("mouseup", gridMouseUp, { once: true });
@@ -123,7 +141,7 @@ export default function WeekPlanning(props: Props) {
         {cols.map((header, c) => (
           <div
             key={c}
-            className={classNames(css.cell, css.colHeader)}
+            className={classNames(css.colHeader)}
             style={{ gridRow: 1, gridColumn: c + 2 }}
           >
             {header.weekday}

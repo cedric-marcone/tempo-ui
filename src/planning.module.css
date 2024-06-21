@@ -1,8 +1,11 @@
 .grid {
   --hcol: minmax(35px, 0.5fr);
   --col: minmax(90px, 1fr);
+  --hrow: minmax(45px, 1.5fr);
+  --row: minmax(25px, 1fr);
 
   display: grid;
+  grid-template-rows: var(--hrow) repeat(auto-fit, var(--row));
   grid-template-columns:
     var(--hcol) var(--col) var(--col) var(--col) var(--col) var(--col)
     var(--col) var(--col);
@@ -37,34 +40,35 @@
   user-select: none;
   pointer-events: none;
   touch-action: none;
+}
 
-  & > .colHeader {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    white-space: nowrap;
+.colHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  white-space: nowrap;
 
-    background-color: #fffd;
-    backdrop-filter: blur(6px);
+  background-color: #fffd;
+  backdrop-filter: blur(6px);
 
-    padding: 1cqb 1cqi;
+  padding: 1cqb 1cqi;
 
-    border-block-end: 0.5px solid #e1e1e1;
-  }
+  border-block-end: 0.5px solid #e1e1e1;
 }
 
 .row {
   display: contents;
+}
 
-  & > .cell {
-    min-block-size: max(25px, 3cqb);
-    user-select: none;
-  }
+.cell {
+  min-block-size: max(25px, 3cqb);
+  user-select: none;
 }
 
 .rowHeader {
   --font-size: clamp(9px, min(2cqb, 2cqi), 11px);
+
   position: sticky;
   left: 0;
   z-index: 2;
@@ -84,11 +88,12 @@
 }
 
 .row:nth-child(n + 2):not(:last-child) > .cell:not(:first-child) {
-  border-block-end: 0.5px solid #f1f1f1;
+  border-block-end: 0.5px solid #e1e1e1;
 }
 
-.cell:nth-child(n + 2):not(:last-child) {
-  border-inline-end: 0.5px solid #e1e1e1;
+.cell:nth-child(n + 2):not(:last-child),
+.colHeader:not(:first-child) {
+  border-inline-end: 0.5px solid #d1d1d1;
 }
 
 .slotOuter {
@@ -114,7 +119,7 @@
   font-size: clamp(11px, min(2cqb, 2cqi), 15px);
 
   color: hsla(var(--hue), 100%, 20%, 0.85);
-  background-color: hsla(var(--hue), 100%, 70%, 0.25);
+  background-color: hsla(var(--hue), 75%, 70%, 0.35);
   outline: 1px solid hsla(var(--hue), 100%, 70%, 0.75);
 
   overflow: hidden;
@@ -129,11 +134,15 @@
 }
 .NEW,
 .NEW:focus {
+  display: flex;
+  justify-content: space-between;
   --hue: 250;
   color: hsla(var(--hue), 0%, 20%, 0.7);
   background-color: hsla(var(--hue), 0%, 75%, 0.25);
   outline: none;
   border-radius: 0;
+  /* font-size: 10px;
+  padding: 0 1px; */
 }
 .CC {
   --hue: 200;
@@ -142,8 +151,8 @@
   --hue: 350;
 }
 .Off {
-  --hue: 54;
-  background-color: hsla(var(--hue), 100%, 50%, 1);
+  --hue: 55;
+  background-color: hsla(var(--hue), 100%, 75%, 1);
   background-image: repeating-linear-gradient(
     330deg,
     #fff,
@@ -151,4 +160,12 @@
     transparent 7px,
     transparent 8px
   );
+}
+
+.from {
+  align-self: start;
+}
+
+.to {
+  align-self: end;
 }

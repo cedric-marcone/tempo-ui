@@ -35,7 +35,7 @@ body {
 main {
   container-type: size;
   flex: 1;
-  max-height: 100dvh;
+  max-block-size: 100dvh;
 }
 
 /* .logo {

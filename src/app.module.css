@@ -18,6 +18,7 @@
 }
 
 .drawerHandle {
+  flex: 0 0 5px;
   margin-top: 10px;
   background: grey;
 }

@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as Dates from "./lib/dates";
 import Planning from "./planning";
-import { Drawer as Vaul } from "vaul";
+import { Drawer } from "vaul";
 import css from "./app.module.css";
 
 const date = Dates.parseUTCDate("2024-06-02");
@@ -34,23 +34,22 @@ export default function App() {
         endHour={21}
         openDialog={openDialog}
       />
-
-      <Vaul.Root
+      <Drawer.Root
         open={open}
         onOpenChange={onOpenChange}
         shouldScaleBackground
-        // handleOnly
+        handleOnly
       >
-        <Vaul.Portal>
-          <Vaul.Overlay className={css.drawerOverlay} />
-          <Vaul.Content className={css.drawerContent}>
-            <Vaul.Handle className={css.drawerHandle} />
-            <Vaul.Title>Événement</Vaul.Title>
-            <Vaul.Description>Détail de l'événement</Vaul.Description>
+        <Drawer.Portal>
+          <Drawer.Overlay className={css.drawerOverlay} />
+          <Drawer.Content className={css.drawerContent}>
+            <Drawer.Handle className={css.drawerHandle} />
+            <Drawer.Title>Événement</Drawer.Title>
+            <Drawer.Description>Détail de l'événement</Drawer.Description>
             {dialog}
-          </Vaul.Content>
-        </Vaul.Portal>
-      </Vaul.Root>
+          </Drawer.Content>
+        </Drawer.Portal>
+      </Drawer.Root>
     </main>
   );
 }

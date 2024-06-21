@@ -2,7 +2,7 @@ import * as React from "react";
 import "./calendar.css";
 
 type Props = {
-  events: Lesson[];
+  events: PlanEvent[];
 };
 
 type State = {
